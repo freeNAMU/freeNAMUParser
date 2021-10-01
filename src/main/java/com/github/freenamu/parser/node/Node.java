@@ -20,10 +20,29 @@ public abstract class Node {
         return children;
     }
 
-    public void add(List<Node> newChildren) {
-        this.children.addAll(newChildren);
+    public void add(Node child) {
+        this.children.add(child);
+    }
+
+    public void addAll(List<Node> children) {
+        this.children.addAll(children);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!type.equals(((Node) o).type)) return false;
+        if (children.size() != ((Node) o).children.size()) return false;
+        for (int i = 0; i < children.size(); i++) {
+            if (!children.get(i).equals(((Node) o).children.get(i))) return false;
+        }
+        return true;
     }
 
     public enum Type {
+        Bold,
+        Italic,
+        Text
     }
 }

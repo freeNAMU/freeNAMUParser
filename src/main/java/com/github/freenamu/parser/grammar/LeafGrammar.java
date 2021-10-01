@@ -11,10 +11,19 @@ public abstract class LeafGrammar implements Grammar {
     }
 
     @Override
-    public Integer getFirstMatchIndex(String rawText) {
+    public Integer getFirstMatchStartIndex(String rawText) {
         Matcher matcher = pattern.matcher(rawText);
         if (matcher.find()) {
             return matcher.start();
+        } else {
+            return null;
+        }
+    }
+
+    public Integer getFirstMatchEndIndex(String rawText) {
+        Matcher matcher = pattern.matcher(rawText);
+        if (matcher.find()) {
+            return matcher.end();
         } else {
             return null;
         }
