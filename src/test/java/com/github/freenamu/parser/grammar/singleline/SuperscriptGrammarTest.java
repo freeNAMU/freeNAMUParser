@@ -1,8 +1,8 @@
 package com.github.freenamu.parser.grammar.singleline;
 
 import com.github.freenamu.parser.node.Node;
+import com.github.freenamu.parser.node.Superscript;
 import com.github.freenamu.parser.node.Text;
-import com.github.freenamu.parser.node.Underline;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,22 +11,22 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UnderlineGrammarTest {
-    private UnderlineGrammar underlineGrammar;
+class SuperscriptGrammarTest {
+    private SuperscriptGrammar superscriptGrammar;
 
     @BeforeEach
     public void setUp() {
-        underlineGrammar = new UnderlineGrammar();
+        superscriptGrammar = new SuperscriptGrammar();
     }
 
     @Test
-    public void matchUnderlineGrammar() {
+    public void matchSuperscriptGrammar() {
         // Given
-        String rawText = "test1__test2__test3";
+        String rawText = "test1^^test2^^test3";
         int expected = 5;
 
         // When
-        Integer actual = underlineGrammar.getFirstMatchStartIndex(rawText);
+        Integer actual = superscriptGrammar.getFirstMatchStartIndex(rawText);
 
         // Then
         assertNotNull(actual);
@@ -34,31 +34,31 @@ class UnderlineGrammarTest {
     }
 
     @Test
-    public void notMatchUnderlineGrammarWithLineFeed() {
+    public void notMatchSuperscriptGrammarWithLineFeed() {
         // Given
-        String rawText = "test1__te\nst2__test3";
+        String rawText = "test1^^te\nst2^^test3";
 
         // When
-        Integer actual = underlineGrammar.getFirstMatchStartIndex(rawText);
+        Integer actual = superscriptGrammar.getFirstMatchStartIndex(rawText);
 
         // Then
         assertNull(actual);
     }
 
     @Test
-    public void parseUnderlineGrammar() {
+    public void parseSuperscriptGrammar() {
         // Given
-        String rawText = "test1__test2__test3";
+        String rawText = "test1^^test2^^test3";
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Underline underline = new Underline();
-        underline.add(new Text("test2"));
-        expected.add(underline);
+        Superscript superscript = new Superscript();
+        superscript.add(new Text("test2"));
+        expected.add(superscript);
         expected.add(new Text("test3"));
 
         // When
-        List<Node> actual = underlineGrammar.parse(rawText);
+        List<Node> actual = superscriptGrammar.parse(rawText);
 
         // Then
         assertEquals(expected.size(), actual.size());
@@ -68,19 +68,19 @@ class UnderlineGrammarTest {
     }
 
     @Test
-    public void parseUnderlineGrammarOnly() {
+    public void parseSuperscriptGrammarOnly() {
         // Given
-        String rawText = "__test2__";
+        String rawText = "^^test2^^";
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text(""));
-        Underline underline = new Underline();
-        underline.add(new Text("test2"));
-        expected.add(underline);
+        Superscript superscript = new Superscript();
+        superscript.add(new Text("test2"));
+        expected.add(superscript);
         expected.add(new Text(""));
 
         // When
-        List<Node> actual = underlineGrammar.parse(rawText);
+        List<Node> actual = superscriptGrammar.parse(rawText);
 
         // Then
         assertEquals(expected.size(), actual.size());

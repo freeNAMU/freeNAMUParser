@@ -1,8 +1,8 @@
 package com.github.freenamu.parser.grammar.singleline;
 
 import com.github.freenamu.parser.node.Node;
+import com.github.freenamu.parser.node.Strikeout;
 import com.github.freenamu.parser.node.Text;
-import com.github.freenamu.parser.node.Underline;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,22 +11,22 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UnderlineGrammarTest {
-    private UnderlineGrammar underlineGrammar;
+class TildeGrammarTest {
+    private TildeGrammar tildeGrammar;
 
     @BeforeEach
     public void setUp() {
-        underlineGrammar = new UnderlineGrammar();
+        tildeGrammar = new TildeGrammar();
     }
 
     @Test
-    public void matchUnderlineGrammar() {
+    public void matchTildeGrammar() {
         // Given
-        String rawText = "test1__test2__test3";
+        String rawText = "test1~~test2~~test3";
         int expected = 5;
 
         // When
-        Integer actual = underlineGrammar.getFirstMatchStartIndex(rawText);
+        Integer actual = tildeGrammar.getFirstMatchStartIndex(rawText);
 
         // Then
         assertNotNull(actual);
@@ -34,31 +34,31 @@ class UnderlineGrammarTest {
     }
 
     @Test
-    public void notMatchUnderlineGrammarWithLineFeed() {
+    public void notMatchTildeGrammarWithLineFeed() {
         // Given
-        String rawText = "test1__te\nst2__test3";
+        String rawText = "test1~~te\nst2~~test3";
 
         // When
-        Integer actual = underlineGrammar.getFirstMatchStartIndex(rawText);
+        Integer actual = tildeGrammar.getFirstMatchStartIndex(rawText);
 
         // Then
         assertNull(actual);
     }
 
     @Test
-    public void parseUnderlineGrammar() {
+    public void parseTildeGrammar() {
         // Given
-        String rawText = "test1__test2__test3";
+        String rawText = "test1~~test2~~test3";
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Underline underline = new Underline();
-        underline.add(new Text("test2"));
-        expected.add(underline);
+        Strikeout strikeout = new Strikeout();
+        strikeout.add(new Text("test2"));
+        expected.add(strikeout);
         expected.add(new Text("test3"));
 
         // When
-        List<Node> actual = underlineGrammar.parse(rawText);
+        List<Node> actual = tildeGrammar.parse(rawText);
 
         // Then
         assertEquals(expected.size(), actual.size());
@@ -68,19 +68,19 @@ class UnderlineGrammarTest {
     }
 
     @Test
-    public void parseUnderlineGrammarOnly() {
+    public void parseTildeGrammarOnly() {
         // Given
-        String rawText = "__test2__";
+        String rawText = "~~test2~~";
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text(""));
-        Underline underline = new Underline();
-        underline.add(new Text("test2"));
-        expected.add(underline);
+        Strikeout strikeout = new Strikeout();
+        strikeout.add(new Text("test2"));
+        expected.add(strikeout);
         expected.add(new Text(""));
 
         // When
-        List<Node> actual = underlineGrammar.parse(rawText);
+        List<Node> actual = tildeGrammar.parse(rawText);
 
         // Then
         assertEquals(expected.size(), actual.size());

@@ -44,6 +44,9 @@ public abstract class Node {
         Bold,
         Italic,
         Underline,
+        Strikeout,
+        Superscript,
+        Subscript,
         Text
     }
 }
