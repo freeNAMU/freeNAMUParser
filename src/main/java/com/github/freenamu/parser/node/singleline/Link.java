@@ -1,4 +1,4 @@
-package com.github.freenamu.parser.node.single;
+package com.github.freenamu.parser.node.singleline;
 
 import com.github.freenamu.parser.node.Node;
 
