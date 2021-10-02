@@ -22,9 +22,7 @@ public class UnderlineGrammar extends LeafGrammar {
 
         if (matcher.find()) {
             result.add(new Text(rawText.substring(0, matcher.start())));
-            Underline underline = new Underline();
-            underline.addAll(new SingleLineGrammar().parse(rawText.substring(matcher.start() + 2, matcher.end() - 2)));
-            result.add(underline);
+            result.add(new Underline(new SingleLineGrammar().parse(rawText.substring(matcher.start() + 2, matcher.end() - 2))));
             result.addAll(new SingleLineGrammar().parse(rawText.substring(matcher.end())));
         }
 

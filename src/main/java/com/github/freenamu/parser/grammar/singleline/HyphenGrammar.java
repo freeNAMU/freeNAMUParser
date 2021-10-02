@@ -22,9 +22,7 @@ public class HyphenGrammar extends LeafGrammar {
 
         if (matcher.find()) {
             result.add(new Text(rawText.substring(0, matcher.start())));
-            Strikeout strikeout = new Strikeout();
-            strikeout.addAll(new SingleLineGrammar().parse(rawText.substring(matcher.start() + 2, matcher.end() - 2)));
-            result.add(strikeout);
+            result.add(new Strikeout(new SingleLineGrammar().parse(rawText.substring(matcher.start() + 2, matcher.end() - 2))));
             result.addAll(new SingleLineGrammar().parse(rawText.substring(matcher.end())));
         }
 

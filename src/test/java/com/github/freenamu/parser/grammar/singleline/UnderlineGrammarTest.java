@@ -52,9 +52,7 @@ class UnderlineGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Underline underline = new Underline();
-        underline.add(new Text("test2"));
-        expected.add(underline);
+        expected.add(new Underline(new Text("test2")));
         expected.add(new Text("test3"));
 
         // When
@@ -74,9 +72,7 @@ class UnderlineGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text(""));
-        Underline underline = new Underline();
-        underline.add(new Text("test2"));
-        expected.add(underline);
+        expected.add(new Underline(new Text("test2")));
         expected.add(new Text(""));
 
         // When

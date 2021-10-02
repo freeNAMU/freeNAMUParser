@@ -52,9 +52,7 @@ class ItalicGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Italic italic = new Italic();
-        italic.add(new Text("test2"));
-        expected.add(italic);
+        expected.add(new Italic(new Text("test2")));
         expected.add(new Text("test3"));
 
         // When
@@ -74,9 +72,7 @@ class ItalicGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text(""));
-        Italic italic = new Italic();
-        italic.add(new Text("test2"));
-        expected.add(italic);
+        expected.add(new Italic(new Text("test2")));
         expected.add(new Text(""));
 
         // When

@@ -22,9 +22,7 @@ public class SuperscriptGrammar extends LeafGrammar {
 
         if (matcher.find()) {
             result.add(new Text(rawText.substring(0, matcher.start())));
-            Superscript superscript = new Superscript();
-            superscript.addAll(new SingleLineGrammar().parse(rawText.substring(matcher.start() + 2, matcher.end() - 2)));
-            result.add(superscript);
+            result.add(new Superscript(new SingleLineGrammar().parse(rawText.substring(matcher.start() + 2, matcher.end() - 2))));
             result.addAll(new SingleLineGrammar().parse(rawText.substring(matcher.end())));
         }
 

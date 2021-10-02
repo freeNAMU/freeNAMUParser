@@ -52,9 +52,7 @@ class HyphenGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Strikeout strikeout = new Strikeout();
-        strikeout.add(new Text("test2"));
-        expected.add(strikeout);
+        expected.add(new Strikeout(new Text("test2")));
         expected.add(new Text("test3"));
 
         // When
@@ -74,9 +72,7 @@ class HyphenGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text(""));
-        Strikeout strikeout = new Strikeout();
-        strikeout.add(new Text("test2"));
-        expected.add(strikeout);
+        expected.add(new Strikeout(new Text("test2")));
         expected.add(new Text(""));
 
         // When

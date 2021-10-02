@@ -12,20 +12,22 @@ public abstract class Node {
         this.children = new ArrayList<>();
     }
 
+    public Node(Type type, Node child) {
+        this(type);
+        this.children.add(child);
+    }
+
+    public Node(Type type, List<Node> children) {
+        this.type = type;
+        this.children = children;
+    }
+
     public Type getType() {
         return type;
     }
 
     public List<Node> getChildren() {
         return children;
-    }
-
-    public void add(Node child) {
-        this.children.add(child);
-    }
-
-    public void addAll(List<Node> children) {
-        this.children.addAll(children);
     }
 
     @Override
@@ -50,6 +52,7 @@ public abstract class Node {
         Footnote,
         LineFeed,
         HorizontalLine,
+        Link,
         Text
     }
 }

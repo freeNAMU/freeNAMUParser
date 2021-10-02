@@ -52,9 +52,7 @@ class BoldGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Bold bold = new Bold();
-        bold.add(new Text("test2"));
-        expected.add(bold);
+        expected.add(new Bold(new Text("test2")));
         expected.add(new Text("test3"));
 
         // When
@@ -74,9 +72,7 @@ class BoldGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text(""));
-        Bold bold = new Bold();
-        bold.add(new Text("test2"));
-        expected.add(bold);
+        expected.add(new Bold(new Text("test2")));
         expected.add(new Text(""));
 
         // When

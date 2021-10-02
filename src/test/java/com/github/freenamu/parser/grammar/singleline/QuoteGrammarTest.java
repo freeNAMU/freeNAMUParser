@@ -27,13 +27,9 @@ class QuoteGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Bold bold = new Bold();
-        bold.add(new Text("test2"));
-        expected.add(bold);
+        expected.add(new Bold(new Text("test2")));
         expected.add(new Text("test3"));
-        Italic italic = new Italic();
-        italic.add(new Text("test4"));
-        expected.add(italic);
+        expected.add(new Italic(new Text("test4")));
         expected.add(new Text("test5"));
 
         // When
@@ -53,13 +49,9 @@ class QuoteGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Italic italic = new Italic();
-        italic.add(new Text("test2"));
-        expected.add(italic);
+        expected.add(new Italic(new Text("test2")));
         expected.add(new Text("test3"));
-        Bold bold = new Bold();
-        bold.add(new Text("test4"));
-        expected.add(bold);
+        expected.add(new Bold(new Text("test4")));
         expected.add(new Text("test5"));
 
         // When
@@ -79,9 +71,7 @@ class QuoteGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Bold bold = new Bold();
-        bold.add(new Text("''test2"));
-        expected.add(bold);
+        expected.add(new Bold(new Text("''test2")));
         expected.add(new Text("''test3"));
 
         // When
@@ -101,13 +91,11 @@ class QuoteGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Bold bold = new Bold();
-        bold.add(new Text(" "));
-        Italic italic = new Italic();
-        italic.add(new Text("test2"));
-        bold.add(italic);
-        bold.add(new Text(" "));
-        expected.add(bold);
+        ArrayList<Node> children = new ArrayList<>();
+        children.add(new Text(" "));
+        children.add(new Italic(new Text("test2")));
+        children.add(new Text(" "));
+        expected.add(new Bold(children));
         expected.add(new Text("test3"));
 
         // When

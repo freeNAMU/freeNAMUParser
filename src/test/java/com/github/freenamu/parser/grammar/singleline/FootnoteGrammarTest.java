@@ -66,9 +66,7 @@ class FootnoteGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Footnote footnote = new Footnote(null);
-        footnote.add(new Text("test2"));
-        expected.add(footnote);
+        expected.add(new Footnote(null, new Text("test2")));
         expected.add(new Text("test3"));
 
         // When
@@ -88,9 +86,7 @@ class FootnoteGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Footnote footnote = new Footnote("test2");
-        footnote.add(new Text("test3"));
-        expected.add(footnote);
+        expected.add(new Footnote("test2", new Text("test3")));
         expected.add(new Text("test4"));
 
         // When
@@ -110,9 +106,7 @@ class FootnoteGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text(""));
-        Footnote footnote = new Footnote(null);
-        footnote.add(new Text("test2"));
-        expected.add(footnote);
+        expected.add(new Footnote(null, new Text("test2")));
         expected.add(new Text(""));
 
         // When
@@ -132,9 +126,7 @@ class FootnoteGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text(""));
-        Footnote footnote = new Footnote("test2");
-        footnote.add(new Text("test3"));
-        expected.add(footnote);
+        expected.add(new Footnote("test2", new Text("test3")));
         expected.add(new Text(""));
 
         // When

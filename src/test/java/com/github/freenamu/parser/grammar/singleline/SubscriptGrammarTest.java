@@ -52,9 +52,7 @@ class SubscriptGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Subscript subscript = new Subscript();
-        subscript.add(new Text("test2"));
-        expected.add(subscript);
+        expected.add(new Subscript(new Text("test2")));
         expected.add(new Text("test3"));
 
         // When
@@ -74,9 +72,7 @@ class SubscriptGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text(""));
-        Subscript subscript = new Subscript();
-        subscript.add(new Text("test2"));
-        expected.add(subscript);
+        expected.add(new Subscript(new Text("test2")));
         expected.add(new Text(""));
 
         // When

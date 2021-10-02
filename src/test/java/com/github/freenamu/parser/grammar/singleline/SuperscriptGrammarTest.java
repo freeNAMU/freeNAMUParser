@@ -52,9 +52,7 @@ class SuperscriptGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Superscript superscript = new Superscript();
-        superscript.add(new Text("test2"));
-        expected.add(superscript);
+        expected.add(new Superscript(new Text("test2")));
         expected.add(new Text("test3"));
 
         // When
@@ -74,9 +72,7 @@ class SuperscriptGrammarTest {
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text(""));
-        Superscript superscript = new Superscript();
-        superscript.add(new Text("test2"));
-        expected.add(superscript);
+        expected.add(new Superscript(new Text("test2")));
         expected.add(new Text(""));
 
         // When

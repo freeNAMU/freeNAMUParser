@@ -22,9 +22,7 @@ public class BoldGrammar extends LeafGrammar {
 
         if (matcher.find()) {
             result.add(new Text(rawText.substring(0, matcher.start())));
-            Bold bold = new Bold();
-            bold.addAll(new SingleLineGrammar().parse(rawText.substring(matcher.start() + 3, matcher.end() - 3)));
-            result.add(bold);
+            result.add(new Bold(new SingleLineGrammar().parse(rawText.substring(matcher.start() + 3, matcher.end() - 3))));
             result.addAll(new SingleLineGrammar().parse(rawText.substring(matcher.end())));
         }
 

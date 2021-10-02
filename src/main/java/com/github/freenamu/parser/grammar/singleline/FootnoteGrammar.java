@@ -28,12 +28,12 @@ public class FootnoteGrammar extends LeafGrammar {
             if (indexOfFirstSpace == -1) {
                 footnote = new Footnote(substring);
             } else {
+                List<Node> footnoteText = new SingleLineGrammar().parse(substring.substring(indexOfFirstSpace + 1));
                 if (indexOfFirstSpace == 0) {
-                    footnote = new Footnote(null);
+                    footnote = new Footnote(null, footnoteText);
                 } else {
-                    footnote = new Footnote(substring.substring(0, indexOfFirstSpace));
+                    footnote = new Footnote(substring.substring(0, indexOfFirstSpace), footnoteText);
                 }
-                footnote.addAll(new SingleLineGrammar().parse(substring.substring(indexOfFirstSpace + 1)));
             }
             result.add(footnote);
             result.addAll(new SingleLineGrammar().parse(rawText.substring(matcher.end())));

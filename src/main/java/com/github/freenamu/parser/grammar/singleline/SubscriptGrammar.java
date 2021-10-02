@@ -22,9 +22,7 @@ public class SubscriptGrammar extends LeafGrammar {
 
         if (matcher.find()) {
             result.add(new Text(rawText.substring(0, matcher.start())));
-            Subscript subscript = new Subscript();
-            subscript.addAll(new SingleLineGrammar().parse(rawText.substring(matcher.start() + 2, matcher.end() - 2)));
-            result.add(subscript);
+            result.add(new Subscript(new SingleLineGrammar().parse(rawText.substring(matcher.start() + 2, matcher.end() - 2))));
             result.addAll(new SingleLineGrammar().parse(rawText.substring(matcher.end())));
         }
 
