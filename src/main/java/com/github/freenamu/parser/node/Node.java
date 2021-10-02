@@ -48,6 +48,7 @@ public abstract class Node {
         Superscript,
         Subscript,
         Footnote,
+        LineFeed,
         Text
     }
 }
