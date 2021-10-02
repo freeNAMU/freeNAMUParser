@@ -9,7 +9,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class LineFeedGrammarTest {
     private LineFeedGrammar lineFeedGrammar;
@@ -22,8 +23,8 @@ class LineFeedGrammarTest {
     @Test
     public void matchLineFeedGrammar() {
         // Given
-        String rawText = "test1\n\ntest2";
-        int expected = 6;
+        String rawText = "test1\ntest2";
+        int expected = 5;
 
         // When
         Integer actual = lineFeedGrammar.getFirstMatchStartIndex(rawText);
@@ -34,24 +35,12 @@ class LineFeedGrammarTest {
     }
 
     @Test
-    public void notMatchLineFeedGrammarWittOneLineFeed() {
+    public void parseLineFeedGrammar() {
         // Given
         String rawText = "test1\ntest2";
 
-        // When
-        Integer actual = lineFeedGrammar.getFirstMatchStartIndex(rawText);
-
-        // Then
-        assertNull(actual);
-    }
-
-    @Test
-    public void parseLineFeedGrammar() {
-        // Given
-        String rawText = "test1\n\ntest2";
-
         List<Node> expected = new ArrayList<>();
-        expected.add(new Text("test1\n"));
+        expected.add(new Text("test1"));
         expected.add(new LineFeed());
         expected.add(new Text("test2"));
 

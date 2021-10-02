@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 
 public class LineFeedGrammar extends LeafGrammar {
     public LineFeedGrammar() {
-        super(Pattern.compile("^\n", Pattern.MULTILINE));
+        super(Pattern.compile("\n"));
     }
 
     @Override
