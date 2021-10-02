@@ -7,6 +7,7 @@ public class SingleLineGrammar extends CompositeGrammar {
         this.grammarList.add(new HorizontalLineGrammar());
         this.grammarList.add(new LineFeedGrammar());
         this.grammarList.add(new FootnoteGrammar());
+        this.grammarList.add(new LinkGrammar());
         this.grammarList.add(new QuoteGrammar());
         this.grammarList.add(new UnderlineGrammar());
         this.grammarList.add(new StrikeoutGrammar());
