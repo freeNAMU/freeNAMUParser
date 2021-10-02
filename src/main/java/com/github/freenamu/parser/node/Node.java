@@ -44,6 +44,7 @@ public abstract class Node {
 
     public enum Type {
         Quotation,
+        Indent,
         Bold,
         Italic,
         Underline,
