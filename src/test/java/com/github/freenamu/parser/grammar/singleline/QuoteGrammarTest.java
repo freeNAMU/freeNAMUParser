@@ -1,4 +1,4 @@
-package com.github.freenamu.parser.grammar;
+package com.github.freenamu.parser.grammar.singleline;
 
 import com.github.freenamu.parser.node.Bold;
 import com.github.freenamu.parser.node.Italic;

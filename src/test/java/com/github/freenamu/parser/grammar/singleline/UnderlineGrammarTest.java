@@ -1,8 +1,8 @@
-package com.github.freenamu.parser.grammar;
+package com.github.freenamu.parser.grammar.singleline;
 
-import com.github.freenamu.parser.node.Italic;
 import com.github.freenamu.parser.node.Node;
 import com.github.freenamu.parser.node.Text;
+import com.github.freenamu.parser.node.Underline;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,22 +11,22 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ItalicGrammarTest {
-    private ItalicGrammar italicGrammar;
+class UnderlineGrammarTest {
+    private UnderlineGrammar underlineGrammar;
 
     @BeforeEach
     public void setUp() {
-        italicGrammar = new ItalicGrammar();
+        underlineGrammar = new UnderlineGrammar();
     }
 
     @Test
-    public void matchItalicGrammar() {
+    public void matchUnderlineGrammar() {
         // Given
-        String rawText = "test1''test2''test3";
+        String rawText = "test1__test2__test3";
         int expected = 5;
 
         // When
-        Integer actual = italicGrammar.getFirstMatchStartIndex(rawText);
+        Integer actual = underlineGrammar.getFirstMatchStartIndex(rawText);
 
         // Then
         assertNotNull(actual);
@@ -34,31 +34,32 @@ class ItalicGrammarTest {
     }
 
     @Test
-    public void notMatchItalicGrammarWithLineFeed() {
+    public void notMatchUnderlineGrammarWithLineFeed() {
         // Given
-        String rawText = "test1''te\nst2''test3";
+        String rawText = "test1__te\nst2__test3";
+        int expected = 5;
 
         // When
-        Integer actual = italicGrammar.getFirstMatchStartIndex(rawText);
+        Integer actual = underlineGrammar.getFirstMatchStartIndex(rawText);
 
         // Then
         assertNull(actual);
     }
 
     @Test
-    public void parseItalicGrammar() {
+    public void parseBoldGrammar() {
         // Given
-        String rawText = "test1''test2''test3";
+        String rawText = "test1__test2__test3";
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Italic italic = new Italic();
-        italic.add(new Text("test2"));
-        expected.add(italic);
+        Underline underline = new Underline();
+        underline.add(new Text("test2"));
+        expected.add(underline);
         expected.add(new Text("test3"));
 
         // When
-        List<Node> actual = italicGrammar.parse(rawText);
+        List<Node> actual = underlineGrammar.parse(rawText);
 
         // Then
         assertEquals(expected.size(), actual.size());
@@ -68,19 +69,19 @@ class ItalicGrammarTest {
     }
 
     @Test
-    public void parseItalicGrammarOnly() {
+    public void parseBoldGrammarOnly() {
         // Given
-        String rawText = "''test2''";
+        String rawText = "__test2__";
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text(""));
-        Italic italic = new Italic();
-        italic.add(new Text("test2"));
-        expected.add(italic);
+        Underline underline = new Underline();
+        underline.add(new Text("test2"));
+        expected.add(underline);
         expected.add(new Text(""));
 
         // When
-        List<Node> actual = italicGrammar.parse(rawText);
+        List<Node> actual = underlineGrammar.parse(rawText);
 
         // Then
         assertEquals(expected.size(), actual.size());

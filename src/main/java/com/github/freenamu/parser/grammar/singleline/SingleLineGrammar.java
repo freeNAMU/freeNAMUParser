@@ -1,5 +1,6 @@
-package com.github.freenamu.parser.grammar;
+package com.github.freenamu.parser.grammar.singleline;
 
+import com.github.freenamu.parser.grammar.CompositeGrammar;
 import com.github.freenamu.parser.node.Node;
 import com.github.freenamu.parser.node.Text;
 
@@ -9,6 +10,7 @@ import java.util.List;
 public class SingleLineGrammar extends CompositeGrammar {
     public SingleLineGrammar() {
         this.grammarList.add(new QuoteGrammar());
+        this.grammarList.add(new UnderlineGrammar());
     }
 
     @Override

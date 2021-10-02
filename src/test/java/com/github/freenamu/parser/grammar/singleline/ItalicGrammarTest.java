@@ -1,6 +1,6 @@
-package com.github.freenamu.parser.grammar;
+package com.github.freenamu.parser.grammar.singleline;
 
-import com.github.freenamu.parser.node.Bold;
+import com.github.freenamu.parser.node.Italic;
 import com.github.freenamu.parser.node.Node;
 import com.github.freenamu.parser.node.Text;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,22 +11,22 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BoldGrammarTest {
-    private BoldGrammar boldGrammar;
+class ItalicGrammarTest {
+    private ItalicGrammar italicGrammar;
 
     @BeforeEach
-    void setUp() {
-        boldGrammar = new BoldGrammar();
+    public void setUp() {
+        italicGrammar = new ItalicGrammar();
     }
 
     @Test
-    public void matchBoldGrammar() {
+    public void matchItalicGrammar() {
         // Given
-        String rawText = "test1'''test2'''test3";
+        String rawText = "test1''test2''test3";
         int expected = 5;
 
         // When
-        Integer actual = boldGrammar.getFirstMatchStartIndex(rawText);
+        Integer actual = italicGrammar.getFirstMatchStartIndex(rawText);
 
         // Then
         assertNotNull(actual);
@@ -34,31 +34,31 @@ class BoldGrammarTest {
     }
 
     @Test
-    public void notMatchBoldGrammarWithLineFeed() {
+    public void notMatchItalicGrammarWithLineFeed() {
         // Given
-        String rawText = "test1'''te\nst2'''test3";
+        String rawText = "test1''te\nst2''test3";
 
         // When
-        Integer actual = boldGrammar.getFirstMatchStartIndex(rawText);
+        Integer actual = italicGrammar.getFirstMatchStartIndex(rawText);
 
         // Then
         assertNull(actual);
     }
 
     @Test
-    public void parseBoldGrammar() {
+    public void parseItalicGrammar() {
         // Given
-        String rawText = "test1'''test2'''test3";
+        String rawText = "test1''test2''test3";
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text("test1"));
-        Bold bold = new Bold();
-        bold.add(new Text("test2"));
-        expected.add(bold);
+        Italic italic = new Italic();
+        italic.add(new Text("test2"));
+        expected.add(italic);
         expected.add(new Text("test3"));
 
         // When
-        List<Node> actual = boldGrammar.parse(rawText);
+        List<Node> actual = italicGrammar.parse(rawText);
 
         // Then
         assertEquals(expected.size(), actual.size());
@@ -68,19 +68,19 @@ class BoldGrammarTest {
     }
 
     @Test
-    public void parseBoldGrammarOnly() {
+    public void parseItalicGrammarOnly() {
         // Given
-        String rawText = "'''test2'''";
+        String rawText = "''test2''";
 
         List<Node> expected = new ArrayList<>();
         expected.add(new Text(""));
-        Bold bold = new Bold();
-        bold.add(new Text("test2"));
-        expected.add(bold);
+        Italic italic = new Italic();
+        italic.add(new Text("test2"));
+        expected.add(italic);
         expected.add(new Text(""));
 
         // When
-        List<Node> actual = boldGrammar.parse(rawText);
+        List<Node> actual = italicGrammar.parse(rawText);
 
         // Then
         assertEquals(expected.size(), actual.size());
