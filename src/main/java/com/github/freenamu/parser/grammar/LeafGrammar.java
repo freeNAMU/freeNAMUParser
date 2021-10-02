@@ -19,13 +19,4 @@ public abstract class LeafGrammar implements Grammar {
             return null;
         }
     }
-
-    public Integer getFirstMatchEndIndex(String rawText) {
-        Matcher matcher = pattern.matcher(rawText);
-        if (matcher.find()) {
-            return matcher.end();
-        } else {
-            return null;
-        }
-    }
 }

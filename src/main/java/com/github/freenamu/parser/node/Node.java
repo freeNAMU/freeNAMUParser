@@ -43,6 +43,7 @@ public abstract class Node {
     }
 
     public enum Type {
+        Quotation,
         Bold,
         Italic,
         Underline,
