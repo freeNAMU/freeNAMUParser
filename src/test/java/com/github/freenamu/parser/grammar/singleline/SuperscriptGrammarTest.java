@@ -1,8 +1,8 @@
 package com.github.freenamu.parser.grammar.singleline;
 
 import com.github.freenamu.parser.node.Node;
-import com.github.freenamu.parser.node.Superscript;
-import com.github.freenamu.parser.node.Text;
+import com.github.freenamu.parser.node.single.Superscript;
+import com.github.freenamu.parser.node.single.Text;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

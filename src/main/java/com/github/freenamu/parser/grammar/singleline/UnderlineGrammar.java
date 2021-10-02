@@ -2,8 +2,8 @@ package com.github.freenamu.parser.grammar.singleline;
 
 import com.github.freenamu.parser.grammar.LeafGrammar;
 import com.github.freenamu.parser.node.Node;
-import com.github.freenamu.parser.node.Text;
-import com.github.freenamu.parser.node.Underline;
+import com.github.freenamu.parser.node.single.Text;
+import com.github.freenamu.parser.node.single.Underline;
 
 import java.util.ArrayList;
 import java.util.List;
