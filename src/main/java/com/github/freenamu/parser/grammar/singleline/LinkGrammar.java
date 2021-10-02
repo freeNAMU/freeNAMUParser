@@ -29,7 +29,7 @@ public class LinkGrammar extends LeafGrammar {
                 link = new Link(substring);
             } else {
                 List<Node> displayText = new SingleLineGrammar().parse(substring.substring(indexOfFirstPipe + 1));
-                link = new Link(substring, displayText);
+                link = new Link(substring.substring(0, indexOfFirstPipe), displayText);
             }
             result.add(link);
             result.addAll(new SingleLineGrammar().parse(rawText.substring(matcher.end())));
