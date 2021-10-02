@@ -47,6 +47,7 @@ public abstract class Node {
         Strikeout,
         Superscript,
         Subscript,
+        Footnote,
         Text
     }
 }
