@@ -3,20 +3,20 @@ package com.github.freenamu.parser.grammar.singleline;
 import com.github.freenamu.parser.node.Node;
 import com.github.freenamu.parser.node.singleline.LineFeed;
 import com.github.freenamu.parser.node.singleline.Text;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
-class LineFeedGrammarTest {
+public class LineFeedGrammarTest {
     private LineFeedGrammar lineFeedGrammar;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         lineFeedGrammar = new LineFeedGrammar();
     }
 
@@ -24,7 +24,7 @@ class LineFeedGrammarTest {
     public void matchLineFeedGrammar() {
         // Given
         String rawText = "test1\ntest2";
-        int expected = 5;
+        Integer expected = 5;
 
         // When
         Integer actual = lineFeedGrammar.getFirstMatchStartIndex(rawText);

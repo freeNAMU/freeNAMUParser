@@ -3,14 +3,14 @@ package com.github.freenamu.parser.grammar.paragraph;
 import com.github.freenamu.parser.node.Node;
 import com.github.freenamu.parser.node.paragraph.Paragraph;
 import com.github.freenamu.parser.node.singleline.Text;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class LeveledParagraphGrammarTest {
+public class LeveledParagraphGrammarTest {
     private LeveledParagraphGrammar leveledParagraphGrammar;
 
     @Test

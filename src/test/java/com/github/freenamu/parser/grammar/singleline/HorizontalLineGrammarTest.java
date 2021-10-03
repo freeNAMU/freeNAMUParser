@@ -3,19 +3,19 @@ package com.github.freenamu.parser.grammar.singleline;
 import com.github.freenamu.parser.node.Node;
 import com.github.freenamu.parser.node.singleline.HorizontalLine;
 import com.github.freenamu.parser.node.singleline.Text;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class HorizontalLineGrammarTest {
+public class HorizontalLineGrammarTest {
     private HorizontalLineGrammar horizontalLineGrammar;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         horizontalLineGrammar = new HorizontalLineGrammar();
     }
 
@@ -23,7 +23,7 @@ class HorizontalLineGrammarTest {
     public void matchHorizontalLineGrammarWith4Hyphen() {
         // Given
         String rawText = "test1\n----\ntest2";
-        int expected = 6;
+        Integer expected = 6;
 
         // When
         Integer actual = horizontalLineGrammar.getFirstMatchStartIndex(rawText);
@@ -37,7 +37,7 @@ class HorizontalLineGrammarTest {
     public void matchHorizontalLineGrammarWith9Hyphen() {
         // Given
         String rawText = "test1\n---------\ntest2";
-        int expected = 6;
+        Integer expected = 6;
 
         // When
         Integer actual = horizontalLineGrammar.getFirstMatchStartIndex(rawText);

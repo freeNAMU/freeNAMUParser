@@ -3,18 +3,18 @@ package com.github.freenamu.parser.grammar.singleline;
 import com.github.freenamu.parser.node.Node;
 import com.github.freenamu.parser.node.singleline.Subscript;
 import com.github.freenamu.parser.node.singleline.Text;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class SubscriptGrammarTest {
+public class SubscriptGrammarTest {
     private SubscriptGrammar subscriptGrammar;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         subscriptGrammar = new SubscriptGrammar();
     }
@@ -23,7 +23,7 @@ class SubscriptGrammarTest {
     public void matchSubscriptGrammar() {
         // Given
         String rawText = "test1,,test2,,test3";
-        int expected = 5;
+        Integer expected = 5;
 
         // When
         Integer actual = subscriptGrammar.getFirstMatchStartIndex(rawText);

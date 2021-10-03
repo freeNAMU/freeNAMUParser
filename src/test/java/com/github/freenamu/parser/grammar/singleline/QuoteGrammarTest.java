@@ -4,18 +4,18 @@ import com.github.freenamu.parser.node.Node;
 import com.github.freenamu.parser.node.singleline.Bold;
 import com.github.freenamu.parser.node.singleline.Italic;
 import com.github.freenamu.parser.node.singleline.Text;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class QuoteGrammarTest {
+public class QuoteGrammarTest {
     private QuoteGrammar quoteGrammar;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         quoteGrammar = new QuoteGrammar();
     }
