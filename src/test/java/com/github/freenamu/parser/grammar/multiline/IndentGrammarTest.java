@@ -4,18 +4,18 @@ import com.github.freenamu.parser.node.Node;
 import com.github.freenamu.parser.node.multiline.Indent;
 import com.github.freenamu.parser.node.singleline.LineFeed;
 import com.github.freenamu.parser.node.singleline.Text;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class IndentGrammarTest {
+public class IndentGrammarTest {
     private IndentGrammar indentGrammar;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         indentGrammar = new IndentGrammar();
     }

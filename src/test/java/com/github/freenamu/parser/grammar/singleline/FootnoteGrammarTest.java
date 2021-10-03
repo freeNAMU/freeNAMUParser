@@ -3,18 +3,18 @@ package com.github.freenamu.parser.grammar.singleline;
 import com.github.freenamu.parser.node.Node;
 import com.github.freenamu.parser.node.singleline.Footnote;
 import com.github.freenamu.parser.node.singleline.Text;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class FootnoteGrammarTest {
+public class FootnoteGrammarTest {
     private FootnoteGrammar footnoteGrammar;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         footnoteGrammar = new FootnoteGrammar();
     }
@@ -23,7 +23,7 @@ class FootnoteGrammarTest {
     public void matchFootnoteGrammar() {
         // Given
         String rawText = "test1[* test2]test3";
-        int expected = 5;
+        Integer expected = 5;
 
         // When
         Integer actual = footnoteGrammar.getFirstMatchStartIndex(rawText);
@@ -37,7 +37,7 @@ class FootnoteGrammarTest {
     public void matchFootnoteGrammarWithAnchor() {
         // Given
         String rawText = "test1[*test2 test3]test4";
-        int expected = 5;
+        Integer expected = 5;
 
         // When
         Integer actual = footnoteGrammar.getFirstMatchStartIndex(rawText);

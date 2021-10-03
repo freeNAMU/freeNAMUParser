@@ -43,7 +43,7 @@ public abstract class Node {
     }
 
     public enum Type {
-        Document,
+        Article,
         Paragraph,
         Quotation,
         Indent,

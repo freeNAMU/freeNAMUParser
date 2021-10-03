@@ -3,18 +3,18 @@ package com.github.freenamu.parser.grammar.singleline;
 import com.github.freenamu.parser.node.Node;
 import com.github.freenamu.parser.node.singleline.Text;
 import com.github.freenamu.parser.node.singleline.Underline;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class UnderlineGrammarTest {
+public class UnderlineGrammarTest {
     private UnderlineGrammar underlineGrammar;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         underlineGrammar = new UnderlineGrammar();
     }
@@ -23,7 +23,7 @@ class UnderlineGrammarTest {
     public void matchUnderlineGrammar() {
         // Given
         String rawText = "test1__test2__test3";
-        int expected = 5;
+        Integer expected = 5;
 
         // When
         Integer actual = underlineGrammar.getFirstMatchStartIndex(rawText);

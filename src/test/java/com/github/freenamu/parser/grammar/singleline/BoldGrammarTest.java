@@ -3,19 +3,19 @@ package com.github.freenamu.parser.grammar.singleline;
 import com.github.freenamu.parser.node.Node;
 import com.github.freenamu.parser.node.singleline.Bold;
 import com.github.freenamu.parser.node.singleline.Text;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class BoldGrammarTest {
+public class BoldGrammarTest {
     private BoldGrammar boldGrammar;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void setUp() {
         boldGrammar = new BoldGrammar();
     }
 
@@ -23,7 +23,7 @@ class BoldGrammarTest {
     public void matchBoldGrammar() {
         // Given
         String rawText = "test1'''test2'''test3";
-        int expected = 5;
+        Integer expected = 5;
 
         // When
         Integer actual = boldGrammar.getFirstMatchStartIndex(rawText);

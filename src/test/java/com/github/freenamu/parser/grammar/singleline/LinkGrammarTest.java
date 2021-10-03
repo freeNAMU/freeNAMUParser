@@ -3,18 +3,18 @@ package com.github.freenamu.parser.grammar.singleline;
 import com.github.freenamu.parser.node.Node;
 import com.github.freenamu.parser.node.singleline.Link;
 import com.github.freenamu.parser.node.singleline.Text;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class LinkGrammarTest {
+public class LinkGrammarTest {
     private LinkGrammar linkGrammar;
 
-    @BeforeEach
+    @Before
     public void setUp() {
         linkGrammar = new LinkGrammar();
     }
@@ -23,7 +23,7 @@ class LinkGrammarTest {
     public void matchLinkGrammar() {
         // Given
         String rawText = "test1[[test2]]test3";
-        int expected = 5;
+        Integer expected = 5;
 
         // When
         Integer actual = linkGrammar.getFirstMatchStartIndex(rawText);
@@ -37,7 +37,7 @@ class LinkGrammarTest {
     public void matchLinkGrammarWithDisplayText() {
         // Given
         String rawText = "test1[[test2|test3]]test4";
-        int expected = 5;
+        Integer expected = 5;
 
         // When
         Integer actual = linkGrammar.getFirstMatchStartIndex(rawText);
