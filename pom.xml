@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.freenamu</groupId>
     <artifactId>freenamu-parser</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
     <name>freeNAMUParser</name>
     <description>A parser written in Java compatible with namumark</description>
     <url>http://github.com/freeNAMU/freeNAMUParser</url>
@@ -18,22 +18,16 @@
         <developer>
             <name>freeNAMU</name>
             <email>freeNAMU@icloud.com</email>
-            <organization>freeNAMU</organization>
-            <organizationUrl>http://github.com/freeNAMU</organizationUrl>
         </developer>
     </developers>
-    <scm>
-        <connection>scm:git:git://github.com/freeNAMU/freeNAMUParser.git</connection>
-        <developerConnection>scm:git:ssh://github.com:freeNAMU/freeNAMUParser.git</developerConnection>
-        <url>http://github.com/freeNAMU/freeNAMUParser</url>
-    </scm>
 
     <dependencies>
         <dependency>
             <groupId>io.github.freenamu</groupId>
             <artifactId>freenamu-node</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
+            <version>0.2.0-SNAPSHOT</version>
         </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -41,6 +35,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
@@ -55,18 +50,6 @@
                 <executions>
                     <execution>
                         <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
                         <goals>
                             <goal>jar</goal>
                         </goals>

@@ -1,7 +1,7 @@
 package com.github.freenamu.parser.grammar;
 
 import com.github.freenamu.node.Node;
-import com.github.freenamu.node.singleline.Text;
+import com.github.freenamu.node.Text;
 
 import java.util.ArrayList;
 import java.util.List;
