@@ -1,9 +1,9 @@
 package com.github.freenamu.parser.grammar.multiline;
 
+import com.github.freenamu.node.Node;
+import com.github.freenamu.node.multiline.Quotation;
+import com.github.freenamu.node.singleline.Text;
 import com.github.freenamu.parser.grammar.LeafGrammar;
-import com.github.freenamu.parser.node.Node;
-import com.github.freenamu.parser.node.multiline.Quotation;
-import com.github.freenamu.parser.node.singleline.Text;
 
 import java.util.ArrayList;
 import java.util.List;

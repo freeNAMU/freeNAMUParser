@@ -1,8 +1,8 @@
 package com.github.freenamu.parser.grammar.singleline;
 
-import com.github.freenamu.parser.node.Node;
-import com.github.freenamu.parser.node.singleline.Superscript;
-import com.github.freenamu.parser.node.singleline.Text;
+import com.github.freenamu.node.Node;
+import com.github.freenamu.node.singleline.Superscript;
+import com.github.freenamu.node.singleline.Text;
 import org.junit.Before;
 import org.junit.Test;
 

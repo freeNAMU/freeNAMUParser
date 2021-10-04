@@ -1,9 +1,9 @@
 package com.github.freenamu.parser.grammar.paragraph;
 
+import com.github.freenamu.node.Node;
+import com.github.freenamu.node.paragraph.Paragraph;
 import com.github.freenamu.parser.grammar.LeafGrammar;
 import com.github.freenamu.parser.grammar.multiline.MultiLineGrammar;
-import com.github.freenamu.parser.node.Node;
-import com.github.freenamu.parser.node.paragraph.Paragraph;
 
 import java.util.ArrayList;
 import java.util.List;

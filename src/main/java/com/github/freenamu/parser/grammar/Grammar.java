@@ -1,6 +1,6 @@
 package com.github.freenamu.parser.grammar;
 
-import com.github.freenamu.parser.node.Node;
+import com.github.freenamu.node.Node;
 
 import java.util.List;
 
