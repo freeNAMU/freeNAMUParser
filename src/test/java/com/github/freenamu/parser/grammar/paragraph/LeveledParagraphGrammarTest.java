@@ -1,8 +1,8 @@
 package com.github.freenamu.parser.grammar.paragraph;
 
-import com.github.freenamu.parser.node.Node;
-import com.github.freenamu.parser.node.paragraph.Paragraph;
-import com.github.freenamu.parser.node.singleline.Text;
+import com.github.freenamu.node.Node;
+import com.github.freenamu.node.paragraph.Paragraph;
+import com.github.freenamu.node.singleline.Text;
 import org.junit.Test;
 
 import java.util.ArrayList;
