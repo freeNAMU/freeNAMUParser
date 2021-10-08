@@ -19,6 +19,7 @@ public class FreeNAMUParser {
     public List<Node> parse(String rawText) {
         List<Node> result = new ArrayList<>();
 
+        rawText = rawText.replaceAll("\r\n", "\n");
         List<String> subText = splitRawText(rawText);
         result.addAll(new BlockGrammar().parse(subText.get(0)));
         for (int i = 1; i < subText.size(); i++)
