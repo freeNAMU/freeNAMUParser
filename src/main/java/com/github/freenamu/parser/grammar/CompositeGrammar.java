@@ -1,13 +1,17 @@
 package com.github.freenamu.parser.grammar;
 
 import com.github.freenamu.node.Node;
-import com.github.freenamu.node.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CompositeGrammar implements Grammar {
     protected final List<Grammar> grammarList = new ArrayList<>();
+    protected final Grammar defaultGrammar;
+
+    public CompositeGrammar(Grammar defaultGrammar) {
+        this.defaultGrammar = defaultGrammar;
+    }
 
     @Override
     public Integer getFirstMatchStartIndex(String rawText) {
@@ -39,9 +43,7 @@ public abstract class CompositeGrammar implements Grammar {
         if (minFirstMatchStartIndex != null) {
             return grammarList.get(grammarIndexOfMinFirstMatchStartIndex).parse(rawText);
         } else {
-            result.add(new Text(rawText));
+            return defaultGrammar.parse(rawText);
         }
-
-        return result;
     }
 }

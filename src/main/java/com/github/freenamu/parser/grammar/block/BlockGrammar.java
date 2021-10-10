@@ -5,9 +5,9 @@ import com.github.freenamu.parser.grammar.inline.InlineGrammar;
 
 public class BlockGrammar extends CompositeGrammar {
     public BlockGrammar() {
+        super(new InlineGrammar());
         this.grammarList.add(new BlockquoteGrammar());
         this.grammarList.add(new IndentGrammar());
         this.grammarList.add(new HorizontalRuleGrammar());
-        this.grammarList.add(new InlineGrammar());
     }
 }

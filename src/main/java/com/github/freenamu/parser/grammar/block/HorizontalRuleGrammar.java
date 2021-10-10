@@ -2,7 +2,6 @@ package com.github.freenamu.parser.grammar.block;
 
 import com.github.freenamu.node.HorizontalRule;
 import com.github.freenamu.node.Node;
-import com.github.freenamu.node.Text;
 import com.github.freenamu.parser.grammar.LeafGrammar;
 import com.github.freenamu.parser.grammar.inline.InlineGrammar;
 
@@ -23,12 +22,12 @@ public class HorizontalRuleGrammar extends LeafGrammar {
 
         if (matcher.find()) {
             if (matcher.start() > 0)
-                result.add(new Text(rawText.substring(0, matcher.start())));
+                result.addAll(new InlineGrammar().parse(rawText.substring(0, matcher.start())));
 
             result.add(new HorizontalRule());
 
             if (rawText.length() > matcher.end())
-                result.addAll(new InlineGrammar().parse(rawText.substring(matcher.end())));
+                result.addAll(new BlockGrammar().parse(rawText.substring(matcher.end())));
         }
 
         return result;

@@ -3,7 +3,6 @@ package com.github.freenamu.parser.grammar.block;
 import com.github.freenamu.node.Blockquote;
 import com.github.freenamu.node.Break;
 import com.github.freenamu.node.Node;
-import com.github.freenamu.node.Text;
 import com.github.freenamu.parser.grammar.LeafGrammar;
 import com.github.freenamu.parser.grammar.inline.InlineGrammar;
 
@@ -24,7 +23,7 @@ public class BlockquoteGrammar extends LeafGrammar {
 
         if (matcher.find()) {
             if (matcher.start() > 0)
-                result.add(new Text(rawText.substring(0, matcher.start())));
+                result.addAll(new InlineGrammar().parse(rawText.substring(0, matcher.start())));
 
             String substring = rawText.substring(matcher.start() + (rawText.charAt(matcher.start()) == '\n' ? 0 : 1), matcher.end());
             String innerText = substring.replaceAll("\n>", "\n");
@@ -36,7 +35,7 @@ public class BlockquoteGrammar extends LeafGrammar {
             result.add(new Blockquote(children));
 
             if (rawText.length() > matcher.end())
-                result.addAll(new InlineGrammar().parse(rawText.substring(matcher.end())));
+                result.addAll(new BlockGrammar().parse(rawText.substring(matcher.end())));
         }
 
         return result;

@@ -4,6 +4,7 @@ import com.github.freenamu.parser.grammar.CompositeGrammar;
 
 public class InlineGrammar extends CompositeGrammar {
     public InlineGrammar() {
+        super(new TextGrammar());
         this.grammarList.add(new BreakGrammar());
         this.grammarList.add(new FootnoteGrammar());
         this.grammarList.add(new AnchorGrammar());
