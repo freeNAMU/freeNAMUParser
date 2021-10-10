@@ -105,4 +105,24 @@ public class IndentGrammarTest {
         // Then
         assertNodeListEquals(expected, actual);
     }
+
+    @Test
+    public void parse_indent_grammar_only() {
+        // Given
+        String rawText = " test1\n test2\n test3";
+        List<Node> expected = new ArrayList<>();
+        ArrayList<Node> childrenOfInnerIndent = new ArrayList<>();
+        childrenOfInnerIndent.add(new Text("test1"));
+        childrenOfInnerIndent.add(new Break());
+        childrenOfInnerIndent.add(new Text("test2"));
+        childrenOfInnerIndent.add(new Break());
+        childrenOfInnerIndent.add(new Text("test3"));
+        expected.add(new Indent(childrenOfInnerIndent));
+
+        // When
+        List<Node> actual = indentGrammar.parse(rawText);
+
+        // Then
+        assertNodeListEquals(expected, actual);
+    }
 }

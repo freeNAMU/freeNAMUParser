@@ -26,7 +26,8 @@ public class IndentGrammar extends LeafGrammar {
             if (matcher.start() > 0)
                 result.add(new Text(rawText.substring(0, matcher.start())));
 
-            String innerText = rawText.substring(matcher.start(), matcher.end()).replaceAll("\n ", "\n");
+            String substring = rawText.substring(matcher.start() + (rawText.charAt(matcher.start()) == '\n' ? 0 : 1), matcher.end());
+            String innerText = substring.replaceAll("\n ", "\n");
             List<Node> children = new BlockGrammar().parse(innerText);
             if (children.get(0).equals(new Break()))
                 children.remove(0);

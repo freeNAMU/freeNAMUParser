@@ -105,4 +105,24 @@ public class BlockquoteGrammarTest {
         // Then
         assertNodeListEquals(expected, actual);
     }
+
+    @Test
+    public void parse_blockquote_grammar_only() {
+        // Given
+        String rawText = ">test1\n>test2\n>test3";
+        List<Node> expected = new ArrayList<>();
+        ArrayList<Node> childrenOfInnerBlockquote = new ArrayList<>();
+        childrenOfInnerBlockquote.add(new Text("test1"));
+        childrenOfInnerBlockquote.add(new Break());
+        childrenOfInnerBlockquote.add(new Text("test2"));
+        childrenOfInnerBlockquote.add(new Break());
+        childrenOfInnerBlockquote.add(new Text("test3"));
+        expected.add(new Blockquote(childrenOfInnerBlockquote));
+
+        // When
+        List<Node> actual = blockquoteGrammar.parse(rawText);
+
+        // Then
+        assertNodeListEquals(expected, actual);
+    }
 }
