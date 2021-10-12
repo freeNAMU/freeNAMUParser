@@ -11,8 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.freenamu.parser.TestUtil.assertNodeListEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class BlockquoteGrammarTest {
     private BlockquoteGrammar blockquoteGrammar;
@@ -48,6 +47,22 @@ public class BlockquoteGrammarTest {
         // Then
         assertNotNull(actual);
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void not_match_indent_without_child() {
+        // Given
+        List<String> rawTexts = new ArrayList<>();
+        rawTexts.add(">");
+        rawTexts.add("\n>");
+        rawTexts.add(">\n");
+        rawTexts.add("\n>\n");
+
+        // Then
+        for (String rawText : rawTexts) {
+            Integer actual = blockquoteGrammar.getFirstMatchStartIndex(rawText);
+            assertNull(actual);
+        }
     }
 
     @Test

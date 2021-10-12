@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class IndentGrammar extends LeafGrammar {
     public IndentGrammar() {
-        super(Pattern.compile("(\n?^ .*?$\n?)+", Pattern.MULTILINE));
+        super(Pattern.compile("(\n?^ .+?$\n?)+", Pattern.MULTILINE));
     }
 
     @Override
