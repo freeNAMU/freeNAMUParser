@@ -1,5 +1,6 @@
 package com.github.freenamu.parser.grammar.inline;
 
+import com.github.freenamu.node.Anchor;
 import com.github.freenamu.node.Footnote;
 import com.github.freenamu.node.Node;
 import com.github.freenamu.node.Text;
@@ -68,6 +69,7 @@ public class FootnoteGrammarTest {
         expected.add(new Text("test1"));
         expected.add(new Footnote(null, new Text("test2")));
         expected.add(new Text("test3"));
+        footnoteGrammar.getFirstMatchStartIndex(rawText);
 
         // When
         List<Node> actual = footnoteGrammar.parse(rawText);
@@ -84,6 +86,7 @@ public class FootnoteGrammarTest {
         expected.add(new Text("test1"));
         expected.add(new Footnote("test2", new Text("test3")));
         expected.add(new Text("test4"));
+        footnoteGrammar.getFirstMatchStartIndex(rawText);
 
         // When
         List<Node> actual = footnoteGrammar.parse(rawText);
@@ -98,6 +101,7 @@ public class FootnoteGrammarTest {
         String rawText = "[* test1]";
         List<Node> expected = new ArrayList<>();
         expected.add(new Footnote(null, new Text("test1")));
+        footnoteGrammar.getFirstMatchStartIndex(rawText);
 
         // When
         List<Node> actual = footnoteGrammar.parse(rawText);
@@ -112,6 +116,22 @@ public class FootnoteGrammarTest {
         String rawText = "[*test1 test2]";
         List<Node> expected = new ArrayList<>();
         expected.add(new Footnote("test1", new Text("test2")));
+        footnoteGrammar.getFirstMatchStartIndex(rawText);
+
+        // When
+        List<Node> actual = footnoteGrammar.parse(rawText);
+
+        // Then
+        assertNodeListEquals(expected, actual);
+    }
+
+    @Test
+    public void parse_footnote_grammar_with_anchor_grammar() {
+        // Given
+        String rawText = "[* [[test1]]]";
+        List<Node> expected = new ArrayList<>();
+        expected.add(new Footnote(null, new Anchor("test1")));
+        footnoteGrammar.getFirstMatchStartIndex(rawText);
 
         // When
         List<Node> actual = footnoteGrammar.parse(rawText);
