@@ -3,6 +3,7 @@ package com.github.freenamu.parser;
 import com.github.freenamu.node.Node;
 import com.github.freenamu.node.Paragraph;
 import com.github.freenamu.parser.grammar.block.BlockGrammar;
+import com.github.freenamu.parser.grammar.inline.InlineGrammar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,8 @@ public class FreeNAMUParser {
 
         rawText = rawText.replaceAll("\r\n", "\n");
         List<String> subText = splitRawText(rawText);
-        result.addAll(new BlockGrammar().parse(subText.get(0)));
+        if (subText.get(0).length() > 0)
+            result.addAll(new BlockGrammar().parse(subText.get(0)));
         for (int i = 1; i < subText.size(); i++)
             result.add(parseParagraph(subText.get(i)));
 
@@ -55,15 +57,17 @@ public class FreeNAMUParser {
         Matcher matcher = pattern.matcher(rawText);
         matcher.find();
 
-        String title = rawText.substring(matcher.start(), matcher.end()).replaceAll("\n", "");
+        String titleText = rawText.substring(matcher.start(), matcher.end()).replaceAll("\n", "");
         int level = 0;
-        while (title.charAt(level) == '=')
+        while (titleText.charAt(level) == '=')
             level++;
-        boolean fold = title.charAt(level) == '#';
+        boolean fold = titleText.charAt(level) == '#';
         if (fold)
-            title = title.substring(level + 2, title.length() - level - 2);
+            titleText = titleText.substring(level + 2, titleText.length() - level - 2);
         else
-            title = title.substring(level + 1, title.length() - level - 1);
+            titleText = titleText.substring(level + 1, titleText.length() - level - 1);
+        List<Node> title = new ArrayList<>();
+        title.addAll(new InlineGrammar().parse(titleText));
 
         List<Node> children = new ArrayList<>();
         if (rawText.length() > matcher.end())
