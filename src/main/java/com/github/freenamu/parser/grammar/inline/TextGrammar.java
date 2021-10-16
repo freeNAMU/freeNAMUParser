@@ -16,7 +16,7 @@ public class TextGrammar extends LeafGrammar {
     @Override
     public List<Node> parse(String rawText) {
         List<Node> result = new ArrayList<>();
-        result.add(new Text(rawText));
+        if (!rawText.equals("")) result.add(new Text(rawText));
         return result;
     }
 }

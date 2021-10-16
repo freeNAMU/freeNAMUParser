@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 
 public class IndentGrammar extends LeafGrammar {
     public IndentGrammar() {
-        super(Pattern.compile("(\n?^ .+?$\n?)+", Pattern.MULTILINE));
+        super(Pattern.compile("(\n?^ .*?$\n?)+", Pattern.MULTILINE));
     }
 
     @Override
@@ -28,9 +28,9 @@ public class IndentGrammar extends LeafGrammar {
             String substring = rawText.substring(matcher.start() + (rawText.charAt(matcher.start()) == '\n' ? 0 : 1), matcher.end());
             String innerText = substring.replaceAll("\n ", "\n");
             List<Node> children = new BlockGrammar().parse(innerText);
-            if (children.get(0).equals(new Break()))
+            if (children.size() > 0 && children.get(0).equals(new Break()))
                 children.remove(0);
-            if (children.get(children.size() - 1).equals(new Break()))
+            if (children.size() > 0 && children.get(children.size() - 1).equals(new Break()))
                 children.remove(children.size() - 1);
             result.add(new Indent(children));
 

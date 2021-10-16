@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.github.freenamu.parser.TestUtil.assertNodeListEquals;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class IndentGrammarTest {
     private IndentGrammar indentGrammar;
@@ -47,22 +48,6 @@ public class IndentGrammarTest {
         // Then
         assertNotNull(actual);
         assertEquals(expected, actual);
-    }
-
-    @Test
-    public void not_match_indent_without_child() {
-        // Given
-        List<String> rawTexts = new ArrayList<>();
-        rawTexts.add(" ");
-        rawTexts.add("\n ");
-        rawTexts.add(" \n");
-        rawTexts.add("\n \n");
-
-        // Then
-        for (String rawText : rawTexts) {
-            Integer actual = indentGrammar.getFirstMatchStartIndex(rawText);
-            assertNull(actual);
-        }
     }
 
     @Test
@@ -139,5 +124,25 @@ public class IndentGrammarTest {
 
         // Then
         assertNodeListEquals(expected, actual);
+    }
+
+    @Test
+    public void parse_indent_without_child() {
+        // Given
+        List<String> rawTexts = new ArrayList<>();
+        rawTexts.add(" ");
+        rawTexts.add("\n ");
+        rawTexts.add(" \n");
+        rawTexts.add("\n \n");
+        List<Node> expected = new ArrayList<>();
+        expected.add(new Indent(new ArrayList<>()));
+
+        for (String rawText : rawTexts) {
+            // When
+            List<Node> actual = indentGrammar.parse(rawText);
+
+            // Then
+            assertNodeListEquals(expected, actual);
+        }
     }
 }
