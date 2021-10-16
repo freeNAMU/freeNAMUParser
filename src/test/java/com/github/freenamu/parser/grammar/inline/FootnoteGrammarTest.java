@@ -22,56 +22,62 @@ public class FootnoteGrammarTest {
     }
 
     @Test
-    public void match_footnote_grammar() {
+    public void should_match_footnote_grammar() {
         // Given
         String rawText = "test1[* test2]test3";
-        Integer expected = 5;
+        int expectedStart = 5;
+        int expectedEnd = 14;
 
         // When
-        Integer actual = footnoteGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = footnoteGrammar.match(rawText);
+        int actualStart = footnoteGrammar.getStart();
+        int actualEnd = footnoteGrammar.getEnd();
 
         // Then
-        assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertTrue(actualMatch);
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
-    public void match_footnote_grammar_with_anchor() {
+    public void should_match_footnote_grammar_with_anchor() {
         // Given
         String rawText = "test1[*test2 test3]test4";
-        Integer expected = 5;
+        int expectedStart = 5;
+        int expectedEnd = 19;
 
         // When
-        Integer actual = footnoteGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = footnoteGrammar.match(rawText);
+        int actualStart = footnoteGrammar.getStart();
+        int actualEnd = footnoteGrammar.getEnd();
 
         // Then
-        assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertTrue(actualMatch);
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
-    public void not_match_footnote_grammar_with_line_feed() {
+    public void should_not_match_footnote_grammar_with_line_feed() {
         // Given
         String rawText = "test1[* te\nst2]test3";
 
         // When
-        Integer actual = footnoteGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = footnoteGrammar.match(rawText);
 
         // Then
-        assertNull(actual);
+        assertFalse(actualMatch);
     }
 
     @Test
-    public void parse_footnote_grammar() {
+    public void should_parse_footnote_grammar() {
         // Given
-        String rawText = "test1[* test2]test3";
+        String rawText = "[* test]";
         List<Node> expected = new ArrayList<>();
-        expected.add(new Text("test1"));
-        expected.add(new Footnote(null, new Text("test2")));
-        expected.add(new Text("test3"));
-        footnoteGrammar.getFirstMatchStartIndex(rawText);
+        expected.add(new Footnote(null, new Text("test")));
 
         // When
+        footnoteGrammar.match(rawText);
         List<Node> actual = footnoteGrammar.parse(rawText);
 
         // Then
@@ -79,46 +85,14 @@ public class FootnoteGrammarTest {
     }
 
     @Test
-    public void parse_footnote_grammar_with_anchor() {
-        // Given
-        String rawText = "test1[*test2 test3]test4";
-        List<Node> expected = new ArrayList<>();
-        expected.add(new Text("test1"));
-        expected.add(new Footnote("test2", new Text("test3")));
-        expected.add(new Text("test4"));
-        footnoteGrammar.getFirstMatchStartIndex(rawText);
-
-        // When
-        List<Node> actual = footnoteGrammar.parse(rawText);
-
-        // Then
-        assertNodeListEquals(expected, actual);
-    }
-
-    @Test
-    public void parse_footnote_grammar_only() {
-        // Given
-        String rawText = "[* test1]";
-        List<Node> expected = new ArrayList<>();
-        expected.add(new Footnote(null, new Text("test1")));
-        footnoteGrammar.getFirstMatchStartIndex(rawText);
-
-        // When
-        List<Node> actual = footnoteGrammar.parse(rawText);
-
-        // Then
-        assertNodeListEquals(expected, actual);
-    }
-
-    @Test
-    public void parse_footnote_grammar_with_anchor_only() {
+    public void should_parse_footnote_grammar_with_anchor() {
         // Given
         String rawText = "[*test1 test2]";
         List<Node> expected = new ArrayList<>();
         expected.add(new Footnote("test1", new Text("test2")));
-        footnoteGrammar.getFirstMatchStartIndex(rawText);
 
         // When
+        footnoteGrammar.match(rawText);
         List<Node> actual = footnoteGrammar.parse(rawText);
 
         // Then
@@ -126,12 +100,12 @@ public class FootnoteGrammarTest {
     }
 
     @Test
-    public void parse_footnote_grammar_with_anchor_grammar() {
+    public void should_parse_footnote_grammar_with_anchor_grammar() {
         // Given
-        String rawText = "[* [[test1]]]";
+        String rawText = "[* [[test]]]";
+        footnoteGrammar.match(rawText);
         List<Node> expected = new ArrayList<>();
-        expected.add(new Footnote(null, new Anchor("test1")));
-        footnoteGrammar.getFirstMatchStartIndex(rawText);
+        expected.add(new Footnote(null, new Anchor("test")));
 
         // When
         List<Node> actual = footnoteGrammar.parse(rawText);

@@ -1,3 +1,6 @@
 /.idea/
 /target/
 /*.iml
+/src/test/java/com/github/freenamu/parser/IntegrationTest.java
+/test.mv.db
+/test.trace.db

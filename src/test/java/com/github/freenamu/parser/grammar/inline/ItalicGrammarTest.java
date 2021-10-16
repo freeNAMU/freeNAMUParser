@@ -21,55 +21,44 @@ public class ItalicGrammarTest {
     }
 
     @Test
-    public void match_italic_grammar() {
+    public void should_match_italic_grammar() {
         // Given
         String rawText = "test1''test2''test3";
-        Integer expected = 5;
+        int expectedStart = 5;
+        int expectedEnd = 14;
 
         // When
-        Integer actual = italicGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = italicGrammar.match(rawText);
+        int actualStart = italicGrammar.getStart();
+        int actualEnd = italicGrammar.getEnd();
 
         // Then
-        assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertTrue(actualMatch);
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
-    public void not_match_italic_grammar_with_line_feed() {
+    public void should_not_match_italic_grammar_with_line_feed() {
         // Given
         String rawText = "test1''te\nst2''test3";
 
         // When
-        Integer actual = italicGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = italicGrammar.match(rawText);
 
         // Then
-        assertNull(actual);
+        assertFalse(actualMatch);
     }
 
     @Test
-    public void parse_italic_grammar() {
+    public void should_parse_italic_grammar() {
         // Given
-        String rawText = "test1''test2''test3";
+        String rawText = "''test''";
         List<Node> expected = new ArrayList<>();
-        expected.add(new Text("test1"));
-        expected.add(new Italic(new Text("test2")));
-        expected.add(new Text("test3"));
+        expected.add(new Italic(new Text("test")));
 
         // When
-        List<Node> actual = italicGrammar.parse(rawText);
-
-        // Then
-        assertNodeListEquals(expected, actual);
-    }
-
-    @Test
-    public void parse_italic_grammar_only() {
-        // Given
-        String rawText = "''test1''";
-        List<Node> expected = new ArrayList<>();
-        expected.add(new Italic(new Text("test1")));
-
-        // When
+        italicGrammar.match(rawText);
         List<Node> actual = italicGrammar.parse(rawText);
 
         // Then

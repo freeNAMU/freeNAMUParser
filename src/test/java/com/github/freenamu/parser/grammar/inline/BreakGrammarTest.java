@@ -2,7 +2,6 @@ package com.github.freenamu.parser.grammar.inline;
 
 import com.github.freenamu.node.Break;
 import com.github.freenamu.node.Node;
-import com.github.freenamu.node.Text;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +10,7 @@ import java.util.List;
 
 import static com.github.freenamu.parser.TestUtil.assertNodeListEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class BreakGrammarTest {
     private BreakGrammar breakGrammar;
@@ -22,43 +21,32 @@ public class BreakGrammarTest {
     }
 
     @Test
-    public void match_break_grammar() {
+    public void should_match_break_grammar() {
         // Given
         String rawText = "test1\ntest2";
-        Integer expected = 5;
+        int expectedStart = 5;
+        int expectedEnd = 6;
 
         // When
-        Integer actual = breakGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = breakGrammar.match(rawText);
+        int actualStart = breakGrammar.getStart();
+        int actualEnd = breakGrammar.getEnd();
 
         // Then
-        assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertTrue(actualMatch);
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
-    public void parse_break_grammar() {
-        // Given
-        String rawText = "test1\ntest2";
-        List<Node> expected = new ArrayList<>();
-        expected.add(new Text("test1"));
-        expected.add(new Break());
-        expected.add(new Text("test2"));
-
-        // When
-        List<Node> actual = breakGrammar.parse(rawText);
-
-        // Then
-        assertNodeListEquals(expected, actual);
-    }
-
-    @Test
-    public void parse_break_grammar_only() {
+    public void should_parse_break_grammar() {
         // Given
         String rawText = "\n";
         List<Node> expected = new ArrayList<>();
         expected.add(new Break());
 
         // When
+        breakGrammar.match(rawText);
         List<Node> actual = breakGrammar.parse(rawText);
 
         // Then

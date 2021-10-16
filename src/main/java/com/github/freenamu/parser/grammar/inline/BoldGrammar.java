@@ -2,12 +2,10 @@ package com.github.freenamu.parser.grammar.inline;
 
 import com.github.freenamu.node.Bold;
 import com.github.freenamu.node.Node;
-import com.github.freenamu.node.Text;
 import com.github.freenamu.parser.grammar.LeafGrammar;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BoldGrammar extends LeafGrammar {
@@ -18,18 +16,9 @@ public class BoldGrammar extends LeafGrammar {
     @Override
     public List<Node> parse(String rawText) {
         List<Node> result = new ArrayList<>();
-        Matcher matcher = pattern.matcher(rawText);
 
-        if (matcher.find()) {
-            if (matcher.start() > 0)
-                result.add(new Text(rawText.substring(0, matcher.start())));
-
-            List<Node> children = new InlineGrammar().parse(rawText.substring(matcher.start() + 3, matcher.end() - 3));
-            result.add(new Bold(children));
-
-            if (rawText.length() > matcher.end())
-                result.addAll(new InlineGrammar().parse(rawText.substring(matcher.end())));
-        }
+        List<Node> children = new InlineGrammar().parse(rawText.substring(3, rawText.length() - 3));
+        result.add(new Bold(children));
 
         return result;
     }

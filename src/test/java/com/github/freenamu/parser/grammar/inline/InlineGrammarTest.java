@@ -23,9 +23,9 @@ public class InlineGrammarTest {
     @Test
     public void parse_bold_before_italic() {
         // Given
-        String rawText = "'''''test1'''''";
+        String rawText = "'''''test'''''";
         List<Node> expected = new ArrayList<>();
-        expected.add(new Bold(new Text("''test1")));
+        expected.add(new Bold(new Text("''test")));
         expected.add(new Text("''"));
 
         // When
@@ -38,11 +38,11 @@ public class InlineGrammarTest {
     @Test
     public void parse_bold_and_italic_when_separated_with_space() {
         // Given
-        String rawText = "''' ''test1'' '''";
+        String rawText = "''' ''test'' '''";
         List<Node> expected = new ArrayList<>();
         List<Node> children = new ArrayList<>();
         children.add(new Text(" "));
-        children.add(new Italic(new Text("test1")));
+        children.add(new Italic(new Text("test")));
         children.add(new Text(" "));
         expected.add(new Bold(children));
 

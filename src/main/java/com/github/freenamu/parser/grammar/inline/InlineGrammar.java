@@ -1,6 +1,7 @@
 package com.github.freenamu.parser.grammar.inline;
 
 import com.github.freenamu.parser.grammar.CompositeGrammar;
+import com.github.freenamu.parser.grammar.TextGrammar;
 
 public class InlineGrammar extends CompositeGrammar {
     public InlineGrammar() {

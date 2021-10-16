@@ -6,44 +6,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class CompositeGrammar implements Grammar {
-    protected final List<Grammar> grammarList = new ArrayList<>();
-    protected final Grammar defaultGrammar;
+    protected final List<LeafGrammar> grammarList = new ArrayList<>();
+    protected final Grammar nextPriorityGrammar;
 
-    public CompositeGrammar(Grammar defaultGrammar) {
-        this.defaultGrammar = defaultGrammar;
-    }
-
-    @Override
-    public Integer getFirstMatchStartIndex(String rawText) {
-        Integer minFirstMatchIndex = null;
-        for (Grammar grammar : grammarList) {
-            Integer firstMatchIndex = grammar.getFirstMatchStartIndex(rawText);
-            if (firstMatchIndex != null && (minFirstMatchIndex == null || firstMatchIndex < minFirstMatchIndex)) {
-                minFirstMatchIndex = firstMatchIndex;
-            }
-        }
-        return minFirstMatchIndex;
+    public CompositeGrammar(Grammar nextPriorityGrammar) {
+        this.nextPriorityGrammar = nextPriorityGrammar;
     }
 
     @Override
     public List<Node> parse(String rawText) {
         List<Node> result = new ArrayList<>();
 
-        Integer minFirstMatchStartIndex = null;
-        Integer grammarIndexOfMinFirstMatchStartIndex = null;
-        for (int i = 0; i < grammarList.size(); i++) {
-            Integer firstMatchStartIndex = grammarList.get(i).getFirstMatchStartIndex(rawText);
-            if (firstMatchStartIndex != null) {
-                if (minFirstMatchStartIndex == null || firstMatchStartIndex < minFirstMatchStartIndex) {
-                    minFirstMatchStartIndex = firstMatchStartIndex;
-                    grammarIndexOfMinFirstMatchStartIndex = i;
+        boolean matchedAny;
+        do {
+            matchedAny = false;
+            Integer minFirstMatchStartIndex = null;
+            Integer indexOfGrammarWithMinFirstMatchStartIndex = null;
+            for (int i = 0; i < grammarList.size(); i++) {
+                LeafGrammar leafGrammar = grammarList.get(i);
+                if (leafGrammar.match(rawText)) {
+                    matchedAny = true;
+                    if (minFirstMatchStartIndex == null || leafGrammar.getStart() < minFirstMatchStartIndex) {
+                        minFirstMatchStartIndex = leafGrammar.getStart();
+                        indexOfGrammarWithMinFirstMatchStartIndex = i;
+                    }
                 }
             }
-        }
-        if (minFirstMatchStartIndex != null) {
-            return grammarList.get(grammarIndexOfMinFirstMatchStartIndex).parse(rawText);
-        } else {
-            return defaultGrammar.parse(rawText);
-        }
+            if (matchedAny) {
+                int start = grammarList.get(indexOfGrammarWithMinFirstMatchStartIndex).getStart();
+                int end = grammarList.get(indexOfGrammarWithMinFirstMatchStartIndex).getEnd();
+                result.addAll(nextPriorityGrammar.parse(rawText.substring(0, start)));
+                result.addAll(grammarList.get(indexOfGrammarWithMinFirstMatchStartIndex).parse(rawText.substring(start, end)));
+                if (rawText.length() > end)
+                    rawText = rawText.substring(end);
+                else
+                    break;
+            } else {
+                result.addAll(nextPriorityGrammar.parse(rawText));
+            }
+        } while (matchedAny);
+
+        return result;
     }
 }

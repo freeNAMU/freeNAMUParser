@@ -21,55 +21,44 @@ public class SubscriptGrammarTest {
     }
 
     @Test
-    public void match_subscript_grammar() {
+    public void should_match_subscript_grammar() {
         // Given
         String rawText = "test1,,test2,,test3";
-        Integer expected = 5;
+        int expectedStart = 5;
+        int expectedEnd = 14;
 
         // When
-        Integer actual = subscriptGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = subscriptGrammar.match(rawText);
+        int actualStart = subscriptGrammar.getStart();
+        int actualEnd = subscriptGrammar.getEnd();
 
         // Then
-        assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertTrue(actualMatch);
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
-    public void not_match_subscript_grammar_with_line_feed() {
+    public void should_not_match_subscript_grammar_with_line_feed() {
         // Given
         String rawText = "test1,,te\nst2,,test3";
 
         // When
-        Integer actual = subscriptGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = subscriptGrammar.match(rawText);
 
         // Then
-        assertNull(actual);
+        assertFalse(actualMatch);
     }
 
     @Test
-    public void parse_subscript_grammar() {
+    public void should_parse_subscript_grammar() {
         // Given
-        String rawText = "test1,,test2,,test3";
+        String rawText = ",,test,,";
         List<Node> expected = new ArrayList<>();
-        expected.add(new Text("test1"));
-        expected.add(new Subscript(new Text("test2")));
-        expected.add(new Text("test3"));
+        expected.add(new Subscript(new Text("test")));
 
         // When
-        List<Node> actual = subscriptGrammar.parse(rawText);
-
-        // Then
-        assertNodeListEquals(expected, actual);
-    }
-
-    @Test
-    public void parse_subscript_grammar_only() {
-        // Given
-        String rawText = ",,test1,,";
-        List<Node> expected = new ArrayList<>();
-        expected.add(new Subscript(new Text("test1")));
-
-        // When
+        subscriptGrammar.match(rawText);
         List<Node> actual = subscriptGrammar.parse(rawText);
 
         // Then

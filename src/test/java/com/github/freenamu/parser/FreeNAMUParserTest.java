@@ -21,7 +21,7 @@ public class FreeNAMUParserTest {
     }
 
     @Test
-    public void parse_article_not_having_paragraph() {
+    public void should_parse_article_not_having_paragraph() {
         // Given
         String rawText = "test1";
         List<Node> expected = new ArrayList<>();
@@ -35,7 +35,7 @@ public class FreeNAMUParserTest {
     }
 
     @Test
-    public void parse_article_having_paragraph() {
+    public void should_parse_article_having_paragraph() {
         // Given
         String rawText = "test1\n== test2 ==\ntest3\n===# test4 #===";
         List<Node> expected = new ArrayList<>();
@@ -55,7 +55,7 @@ public class FreeNAMUParserTest {
     }
 
     @Test
-    public void parse_article_having_inline_grammar_in_title() {
+    public void should_parse_article_having_inline_grammar_in_title() {
         // Given
         String rawText = "== [[test1]] ==\ntest2";
         List<Node> expected = new ArrayList<>();

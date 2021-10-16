@@ -10,9 +10,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.github.freenamu.parser.TestUtil.addBreak;
 import static com.github.freenamu.parser.TestUtil.assertNodeListEquals;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 public class IndentGrammarTest {
     private IndentGrammar indentGrammar;
@@ -23,122 +24,132 @@ public class IndentGrammarTest {
     }
 
     @Test
-    public void match_1_line_indent_grammar() {
+    public void should_match_1_line_indent_grammar() {
         // Given
         String rawText = "test1\n test2\ntest3";
-        Integer expected = 5;
+        int expectedStart = 5;
+        int expectedEnd = 13;
 
         // When
-        Integer actual = indentGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = indentGrammar.match(rawText);
+        int actualStart = indentGrammar.getStart();
+        int actualEnd = indentGrammar.getEnd();
 
         // Then
-        assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertTrue(actualMatch);
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
-    public void match_2_line_indent_grammar() {
+    public void should_match_2_line_indent_grammar() {
         // Given
         String rawText = "test1\n test2\n test3\ntest4";
-        Integer expected = 5;
+        int expectedStart = 5;
+        int expectedEnd = 20;
 
         // When
-        Integer actual = indentGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = indentGrammar.match(rawText);
+        int actualStart = indentGrammar.getStart();
+        int actualEnd = indentGrammar.getEnd();
 
         // Then
-        assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertTrue(actualMatch);
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
-    public void parse_1_line_indent_grammar() {
+    public void should_parse_1_line_indent_grammar() {
         // Given
-        String rawText = "test1\n test2\ntest3";
+        List<String> rawTexts = addBreak(" test");
         List<Node> expected = new ArrayList<>();
-        expected.add(new Text("test1"));
-        expected.add(new Indent(new Text("test2")));
-        expected.add(new Text("test3"));
+        expected.add(new Indent(new Text("test")));
 
-        // When
-        List<Node> actual = indentGrammar.parse(rawText);
+        for (String rawText : rawTexts) {
+            // When
+            indentGrammar.match(rawText);
+            List<Node> actual = indentGrammar.parse(rawText);
 
-        // Then
-        assertNodeListEquals(expected, actual);
+            // Then
+            assertNodeListEquals(expected, actual);
+        }
     }
 
     @Test
-    public void parse_2_line_indent_grammar() {
+    public void should_parse_2_line_indent_grammar() {
         // Given
-        String rawText = "test1\n test2\n test3\ntest4";
+        List<String> rawTexts = addBreak(" test1\n test2");
         List<Node> expected = new ArrayList<>();
-        expected.add(new Text("test1"));
         ArrayList<Node> children = new ArrayList<>();
-        children.add(new Text("test2"));
+        children.add(new Text("test1"));
         children.add(new Break());
-        children.add(new Text("test3"));
+        children.add(new Text("test2"));
         expected.add(new Indent(children));
-        expected.add(new Text("test4"));
 
-        // When
-        List<Node> actual = indentGrammar.parse(rawText);
+        for (String rawText : rawTexts) {
+            // When
+            indentGrammar.match(rawText);
+            List<Node> actual = indentGrammar.parse(rawText);
 
-        // Then
-        assertNodeListEquals(expected, actual);
+            // Then
+            assertNodeListEquals(expected, actual);
+        }
     }
 
     @Test
-    public void parse_indent_grammar_in_indent_grammar() {
+    public void should_parse_indent_grammar_in_indent_grammar() {
         // Given
-        String rawText = "test1\n  test2\n  test3\ntest4";
-        List<Node> expected = new ArrayList<>();
-        expected.add(new Text("test1"));
-        ArrayList<Node> childrenOfInnerIndent = new ArrayList<>();
-        childrenOfInnerIndent.add(new Text("test2"));
-        childrenOfInnerIndent.add(new Break());
-        childrenOfInnerIndent.add(new Text("test3"));
-        expected.add(new Indent(new Indent(childrenOfInnerIndent)));
-        expected.add(new Text("test4"));
-
-        // When
-        List<Node> actual = indentGrammar.parse(rawText);
-
-        // Then
-        assertNodeListEquals(expected, actual);
-    }
-
-    @Test
-    public void parse_indent_grammar_only() {
-        // Given
-        String rawText = " test1\n test2\n test3";
+        List<String> rawTexts = addBreak("  test1\n  test2");
         List<Node> expected = new ArrayList<>();
         ArrayList<Node> childrenOfInnerIndent = new ArrayList<>();
         childrenOfInnerIndent.add(new Text("test1"));
         childrenOfInnerIndent.add(new Break());
         childrenOfInnerIndent.add(new Text("test2"));
-        childrenOfInnerIndent.add(new Break());
-        childrenOfInnerIndent.add(new Text("test3"));
-        expected.add(new Indent(childrenOfInnerIndent));
+        expected.add(new Indent(new Indent(childrenOfInnerIndent)));
 
-        // When
-        List<Node> actual = indentGrammar.parse(rawText);
+        for (String rawText : rawTexts) {
+            // When
+            indentGrammar.match(rawText);
+            List<Node> actual = indentGrammar.parse(rawText);
 
-        // Then
-        assertNodeListEquals(expected, actual);
+            // Then
+            assertNodeListEquals(expected, actual);
+        }
     }
 
     @Test
-    public void parse_indent_without_child() {
+    public void should_parse_indent_grammar_with_empty_line() {
         // Given
-        List<String> rawTexts = new ArrayList<>();
-        rawTexts.add(" ");
-        rawTexts.add("\n ");
-        rawTexts.add(" \n");
-        rawTexts.add("\n \n");
+        List<String> rawTexts = addBreak(" test1\n \n test2");
+        List<Node> expected = new ArrayList<>();
+        ArrayList<Node> children = new ArrayList<>();
+        children.add(new Text("test1"));
+        children.add(new Break());
+        children.add(new Break());
+        children.add(new Text("test2"));
+        expected.add(new Indent(children));
+
+        for (String rawText : rawTexts) {
+            // When
+            indentGrammar.match(rawText);
+            List<Node> actual = indentGrammar.parse(rawText);
+
+            // Then
+            assertNodeListEquals(expected, actual);
+        }
+    }
+
+    @Test
+    public void should_parse_indent_without_child() {
+        // Given
+        List<String> rawTexts = addBreak(" ");
         List<Node> expected = new ArrayList<>();
         expected.add(new Indent(new ArrayList<>()));
 
         for (String rawText : rawTexts) {
             // When
+            indentGrammar.match(rawText);
             List<Node> actual = indentGrammar.parse(rawText);
 
             // Then

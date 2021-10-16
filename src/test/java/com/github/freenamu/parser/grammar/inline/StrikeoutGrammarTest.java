@@ -21,67 +21,74 @@ public class StrikeoutGrammarTest {
     }
 
     @Test
-    public void match_strikeout_grammar_with_hyphen() {
+    public void should_match_strikeout_grammar_with_hyphen() {
         // Given
         String rawText = "test1--test2--test3";
-        Integer expected = 5;
+        int expectedStart = 5;
+        int expectedEnd = 14;
 
         // When
-        Integer actual = strikeoutGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = strikeoutGrammar.match(rawText);
+        int actualStart = strikeoutGrammar.getStart();
+        int actualEnd = strikeoutGrammar.getEnd();
 
         // Then
-        assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertTrue(actualMatch);
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
-    public void match_strikeout_grammar_with_tilde() {
+    public void should_match_strikeout_grammar_with_tilde() {
         // Given
         String rawText = "test1~~test2~~test3";
-        Integer expected = 5;
+        int expectedStart = 5;
+        int expectedEnd = 14;
 
         // When
-        Integer actual = strikeoutGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = strikeoutGrammar.match(rawText);
+        int actualStart = strikeoutGrammar.getStart();
+        int actualEnd = strikeoutGrammar.getEnd();
 
         // Then
-        assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertTrue(actualMatch);
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
-    public void not_match_strikeout_grammar_with_hyphen_and_line_feed() {
+    public void should_not_match_strikeout_grammar_with_hyphen_and_line_feed() {
         // Given
         String rawText = "test1--te\nst2--test3";
 
         // When
-        Integer actual = strikeoutGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = strikeoutGrammar.match(rawText);
 
         // Then
-        assertNull(actual);
+        assertFalse(actualMatch);
     }
 
     @Test
-    public void not_match_strikeout_grammar_with_tilde_and_line_feed() {
+    public void should_not_match_strikeout_grammar_with_tilde_and_line_feed() {
         // Given
         String rawText = "test1~~te\nst2~~test3";
 
         // When
-        Integer actual = strikeoutGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = strikeoutGrammar.match(rawText);
 
         // Then
-        assertNull(actual);
+        assertFalse(actualMatch);
     }
 
     @Test
-    public void parse_strikeout_grammar_with_hyphen() {
+    public void should_parse_strikeout_grammar_with_hyphen() {
         // Given
-        String rawText = "test1--test2--test3";
+        String rawText = "--test--";
         List<Node> expected = new ArrayList<>();
-        expected.add(new Text("test1"));
-        expected.add(new Strikeout(new Text("test2")));
-        expected.add(new Text("test3"));
+        expected.add(new Strikeout(new Text("test")));
 
         // When
+        strikeoutGrammar.match(rawText);
         List<Node> actual = strikeoutGrammar.parse(rawText);
 
         // Then
@@ -89,43 +96,14 @@ public class StrikeoutGrammarTest {
     }
 
     @Test
-    public void parse_strikeout_grammar_with_tilde() {
+    public void should_parse_strikeout_grammar_with_tilde() {
         // Given
-        String rawText = "test1~~test2~~test3";
+        String rawText = "~~test~~";
         List<Node> expected = new ArrayList<>();
-        expected.add(new Text("test1"));
-        expected.add(new Strikeout(new Text("test2")));
-        expected.add(new Text("test3"));
+        expected.add(new Strikeout(new Text("test")));
 
         // When
-        List<Node> actual = strikeoutGrammar.parse(rawText);
-
-        // Then
-        assertNodeListEquals(expected, actual);
-    }
-
-    @Test
-    public void parse_strikeout_grammar_with_hyphen_only() {
-        // Given
-        String rawText = "--test1--";
-        List<Node> expected = new ArrayList<>();
-        expected.add(new Strikeout(new Text("test1")));
-
-        // When
-        List<Node> actual = strikeoutGrammar.parse(rawText);
-
-        // Then
-        assertNodeListEquals(expected, actual);
-    }
-
-    @Test
-    public void parse_strikeout_grammar_with_tilde_only() {
-        // Given
-        String rawText = "~~test1~~";
-        List<Node> expected = new ArrayList<>();
-        expected.add(new Strikeout(new Text("test1")));
-
-        // When
+        strikeoutGrammar.match(rawText);
         List<Node> actual = strikeoutGrammar.parse(rawText);
 
         // Then

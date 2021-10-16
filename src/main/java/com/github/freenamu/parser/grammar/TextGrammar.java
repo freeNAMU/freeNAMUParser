@@ -1,8 +1,7 @@
-package com.github.freenamu.parser.grammar.inline;
+package com.github.freenamu.parser.grammar;
 
 import com.github.freenamu.node.Node;
 import com.github.freenamu.node.Text;
-import com.github.freenamu.parser.grammar.LeafGrammar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,10 @@ public class TextGrammar extends LeafGrammar {
     @Override
     public List<Node> parse(String rawText) {
         List<Node> result = new ArrayList<>();
-        if (!rawText.equals("")) result.add(new Text(rawText));
+
+        if (!rawText.equals(""))
+            result.add(new Text(rawText));
+
         return result;
     }
 }

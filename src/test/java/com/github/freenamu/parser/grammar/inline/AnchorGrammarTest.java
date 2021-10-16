@@ -21,67 +21,74 @@ public class AnchorGrammarTest {
     }
 
     @Test
-    public void match_anchor_grammar() {
+    public void should_match_anchor_grammar() {
         // Given
         String rawText = "test1[[test2]]test3";
-        Integer expected = 5;
+        int expectedStart = 5;
+        int expectedEnd = 14;
 
         // When
-        Integer actual = anchorGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = anchorGrammar.match(rawText);
+        int actualStart = anchorGrammar.getStart();
+        int actualEnd = anchorGrammar.getEnd();
 
         // Then
-        assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertTrue(actualMatch);
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
-    public void match_anchor_grammar_with_display_text() {
+    public void should_match_anchor_grammar_with_display_text() {
         // Given
         String rawText = "test1[[test2|test3]]test4";
-        Integer expected = 5;
+        int expectedStart = 5;
+        int expectedEnd = 20;
 
         // When
-        Integer actual = anchorGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = anchorGrammar.match(rawText);
+        int actualStart = anchorGrammar.getStart();
+        int actualEnd = anchorGrammar.getEnd();
 
         // Then
-        assertNotNull(actual);
-        assertEquals(expected, actual);
+        assertTrue(actualMatch);
+        assertEquals(expectedStart, actualStart);
+        assertEquals(expectedEnd, actualEnd);
     }
 
     @Test
-    public void not_match_anchor_grammar_with_line_feed() {
+    public void should_not_match_anchor_grammar_with_line_feed() {
         // Given
         String rawText = "test1[[te\nst2]]test3";
 
         // When
-        Integer actual = anchorGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = anchorGrammar.match(rawText);
 
         // Then
-        assertNull(actual);
+        assertFalse(actualMatch);
     }
 
     @Test
-    public void not_match_anchor_grammar_with_display_text_and_line_feed() {
+    public void should_not_match_anchor_grammar_with_display_text_and_line_feed() {
         // Given
         String rawText = "test1[[test2|te\nst3]]test4";
 
         // When
-        Integer actual = anchorGrammar.getFirstMatchStartIndex(rawText);
+        boolean actualMatch = anchorGrammar.match(rawText);
 
         // Then
-        assertNull(actual);
+        assertFalse(actualMatch);
     }
 
     @Test
-    public void parse_anchor_grammar() {
+    public void should_parse_anchor_grammar() {
         // Given
-        String rawText = "test1[[test2]]test3";
+        String rawText = "[[test]]";
         List<Node> expected = new ArrayList<>();
-        expected.add(new Text("test1"));
-        expected.add(new Anchor("test2"));
-        expected.add(new Text("test3"));
+        expected.add(new Anchor("test"));
 
         // When
+        anchorGrammar.match(rawText);
         List<Node> actual = anchorGrammar.parse(rawText);
 
         // Then
@@ -89,43 +96,14 @@ public class AnchorGrammarTest {
     }
 
     @Test
-    public void parse_anchor_grammar_with_display_text() {
-        // Given
-        String rawText = "test1[[test2|test3]]test4";
-        List<Node> expected = new ArrayList<>();
-        expected.add(new Text("test1"));
-        expected.add(new Anchor("test2", new Text("test3")));
-        expected.add(new Text("test4"));
-
-        // When
-        List<Node> actual = anchorGrammar.parse(rawText);
-
-        // Then
-        assertNodeListEquals(expected, actual);
-    }
-
-    @Test
-    public void parse_anchor_grammar_only() {
-        // Given
-        String rawText = "[[test1]]";
-        List<Node> expected = new ArrayList<>();
-        expected.add(new Anchor("test1"));
-
-        // When
-        List<Node> actual = anchorGrammar.parse(rawText);
-
-        // Then
-        assertNodeListEquals(expected, actual);
-    }
-
-    @Test
-    public void parseanchorGrammarWithDisplayTextOnly() {
+    public void should_parse_anchor_grammar_with_display_text() {
         // Given
         String rawText = "[[test1|test2]]";
         List<Node> expected = new ArrayList<>();
         expected.add(new Anchor("test1", new Text("test2")));
 
         // When
+        anchorGrammar.match(rawText);
         List<Node> actual = anchorGrammar.parse(rawText);
 
         // Then
