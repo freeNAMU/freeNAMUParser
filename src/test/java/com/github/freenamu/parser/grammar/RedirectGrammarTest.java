@@ -85,4 +85,19 @@ public class RedirectGrammarTest {
         // Then
         assertNodeListEquals(expected, actual);
     }
+
+    @Test
+    public void should_trim_line_feed_at_last() {
+        // Given
+        String rawText = "#redirect test\n";
+        List<Node> expected = new ArrayList<>();
+        expected.add(new Redirect("test"));
+
+        // When
+        redirectGrammar.match(rawText);
+        List<Node> actual = redirectGrammar.parse(rawText);
+
+        // Then
+        assertNodeListEquals(expected, actual);
+    }
 }

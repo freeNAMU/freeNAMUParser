@@ -35,7 +35,10 @@ public class RedirectGrammar extends LeafGrammar {
     public List<Node> parse(String rawText) {
         List<Node> result = new ArrayList<>();
 
-        result.add(new Redirect(rawText.substring(10)));
+        String documentName = rawText.substring(10);
+        if (documentName.charAt(documentName.length() - 1) == '\n')
+            documentName = documentName.substring(0, documentName.length() - 1);
+        result.add(new Redirect(documentName));
 
         return result;
     }
