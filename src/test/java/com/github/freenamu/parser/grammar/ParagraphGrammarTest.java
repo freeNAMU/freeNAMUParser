@@ -1,4 +1,4 @@
-package com.github.freenamu.parser;
+package com.github.freenamu.parser.grammar;
 
 import com.github.freenamu.node.Anchor;
 import com.github.freenamu.node.Node;
@@ -12,12 +12,12 @@ import java.util.List;
 
 import static com.github.freenamu.parser.TestUtil.assertNodeListEquals;
 
-public class FreeNAMUParserTest {
-    private FreeNAMUParser freeNAMUParser;
+public class ParagraphGrammarTest {
+    private ParagraphGrammar paragraphGrammar;
 
     @Before
     public void setUp() {
-        this.freeNAMUParser = new FreeNAMUParser();
+        this.paragraphGrammar = new ParagraphGrammar();
     }
 
     @Test
@@ -28,7 +28,7 @@ public class FreeNAMUParserTest {
         expected.add(new Text("test1"));
 
         // When
-        List<Node> actual = freeNAMUParser.parse(rawText);
+        List<Node> actual = paragraphGrammar.parse(rawText);
 
         // Then
         assertNodeListEquals(expected, actual);
@@ -48,7 +48,7 @@ public class FreeNAMUParserTest {
         expected.add(new Paragraph(title2, 3, true));
 
         // When
-        List<Node> actual = freeNAMUParser.parse(rawText);
+        List<Node> actual = paragraphGrammar.parse(rawText);
 
         // Then
         assertNodeListEquals(expected, actual);
@@ -64,7 +64,7 @@ public class FreeNAMUParserTest {
         expected.add(new Paragraph(title, 2, false, new Text("test2")));
 
         // When
-        List<Node> actual = freeNAMUParser.parse(rawText);
+        List<Node> actual = paragraphGrammar.parse(rawText);
 
         // Then
         assertNodeListEquals(expected, actual);
